@@ -13,6 +13,7 @@
 | [ctheorems 2.0.0](https://typst.app/universe/package/ctheorems/)     | 定理类环境、共享编号、引用与证明结束符 |
 | [algorithmic 1.0.7](https://typst.app/universe/package/algorithmic/) | 算法、行号与控制流                     |
 | [subpar 0.2.2](https://typst.app/universe/package/subpar/)           | 子图、子图注与引用                     |
+| [showybox 2.0.4](https://typst.app/universe/package/showybox/)       | 数学环境的彩色圆角框                   |
 
 在项目根目录执行：
 
@@ -95,7 +96,7 @@ lamport1994latex:
 #proof[Your proof.]
 ```
 
-定理类环境由 `ctheorems` 提供，模板只配置名称、字体样式、间距及计数器。以下环境按一级标题重新编号，共享同一个计数器，附录使用 `A.1` 等编号：
+定理类环境由 `ctheorems` 提供，模板配置名称、字体样式、间距及计数器，showybox 提供圆角框。以下环境按一级标题重新编号，共享同一个计数器，附录使用 `A.1` 等编号：
 
 | 函数          | 显示名称    | 正文样式 |
 | ------------- | ----------- | -------- |
@@ -122,7 +123,7 @@ lamport1994latex:
 #remark(numbering: none)[An unnumbered remark.]
 ```
 
-使用包原生参数：`name` 设置可选名称，也可写 `#theorem[Name][Body]`；`numbering: none` 不编号且不推进计数器；`breakable: false` 保持正文块完整；`body-fmt: x => x` 改为正体。`proof` 不编号，末尾自动添加证明结束符，`qedhere` 可在末行公式中手动定位结束符。正文 Method 部分提供了这些环境、算法和子图的示例。
+使用包原生参数：`name` 设置可选名称，也可写 `#theorem[Name][Body]`；`numbering: none` 不编号且不推进计数器；`breakable: true` 允许长环境跨栏、跨页（默认不拆分）；`body-fmt: x => x` 改为正体。`proof` 不编号，末尾自动添加证明结束符，`qedhere` 可在末行公式中手动定位结束符。正文 Method 部分提供了这些环境、算法和子图的示例。
 
 定理等环境支持直接交叉引用：
 
@@ -130,6 +131,18 @@ lamport1994latex:
 #lemma[Your lemma.] <lem:result>
 By @lem:result, the desired result follows.
 ```
+
+### 数学环境的彩色框
+
+中英文使用同一套配色：定理蓝色、引理青绿色、命题紫色、推论绿色、猜想金棕色、断言钢蓝色、定义蓝绿色、假设橙棕色、注橄榄灰、例玫红色、记号蓝灰色、问题红色、观察橄榄绿、证明灰色。浅色背景、细边框和有色标题保持统一，正文仍为黑色。
+
+配色集中在 `template.typ` 的 `environment-colors` 中。单个环境也可以覆盖颜色或允许长内容拆分：
+
+```typ
+#theorem(box-color: rgb("6554A4"), breakable: true)[Your long theorem.]
+```
+
+短环境默认保持完整，不会把标题与正文拆到两栏。长环境需设置 `breakable: true`，证明同样适用；编号、标签、引用和证明结束符继续由 ctheorems 提供。
 
 ### 算法与伪代码
 

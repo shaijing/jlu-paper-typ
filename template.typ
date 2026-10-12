@@ -26,12 +26,64 @@
 
 // Package-backed environments: only theme and shared-counter configuration live here.
 #import "@preview/ctheorems:2.0.0": (
-  proof as package-proof, qedhere, tag, thm, thm-rules,
+  proof as package-proof, proof-body-fmt, qedhere, tag, thm, thm-fmt-block,
+  thm-rules,
 )
 #import "@preview/algorithmic:1.0.7" as algorithmic
 #import "@preview/subpar:0.2.2" as subpar
+#import "@preview/showybox:2.0.4": showybox
+
+// One palette for both languages. Backgrounds remain pale for long-form reading.
+#let environment-colors = (
+  theorem: jlu-blue,
+  lemma: rgb("287A70"),
+  proposition: rgb("6554A4"),
+  corollary: rgb("3F7E48"),
+  conjecture: rgb("AD7631"),
+  claim: rgb("447394"),
+  definition: rgb("347C90"),
+  assumption: rgb("AD6539"),
+  remark: rgb("77704E"),
+  example: rgb("AA537A"),
+  notation: rgb("66748D"),
+  problem: rgb("A75252"),
+  observation: rgb("73823D"),
+  proof: rgb("68717C"),
+)
+
+// ctheorems formats and numbers the statement; showybox supplies its frame.
+#let boxed-thm(format: thm-fmt-block, data) = {
+  let args = data.args
+  let color = args.remove("box-color", default: jlu-blue)
+  let breakable = args.remove("breakable", default: false)
+  let above = args.remove("above", default: .75em)
+  let below = args.remove("below", default: .65em)
+  args.insert("above", 0pt)
+  args.insert("below", 0pt)
+  args.insert("breakable", breakable)
+  let title-fmt = args.remove("title-fmt", default: strong)
+  args.insert("title-fmt", x => text(fill: color, title-fmt(x)))
+  showybox(
+    width: 100%,
+    breakable: breakable,
+    above: above,
+    below: below,
+    frame: (
+      border-color: color.lighten(25%),
+      body-color: color.lighten(96%),
+      thickness: .5pt,
+      radius: 1.5mm,
+      inset: (x: 2mm, y: 1.8mm),
+    ),
+    {
+      set par(first-line-indent: 0pt)
+      format(data + (args: args))
+    },
+  )
+}
 #let appendix-mode = state("jlu-appendix-mode", false)
 #let statement = thm.with(
+  fmt: boxed-thm,
   counter: "jlu-statements",
   base: "heading",
   base-level: 1,
@@ -42,21 +94,70 @@
   above: .8em,
   below: .5em,
 )
-#let theorem = statement.with(supplement: "Theorem")
-#let lemma = statement.with(supplement: "Lemma")
-#let proposition = statement.with(supplement: "Proposition")
-#let corollary = statement.with(supplement: "Corollary")
-#let conjecture = statement.with(supplement: "Conjecture")
-#let claim = statement.with(supplement: "Claim")
+#let theorem = statement.with(
+  supplement: "Theorem",
+  box-color: environment-colors.theorem,
+)
+#let lemma = statement.with(
+  supplement: "Lemma",
+  box-color: environment-colors.lemma,
+)
+#let proposition = statement.with(
+  supplement: "Proposition",
+  box-color: environment-colors.proposition,
+)
+#let corollary = statement.with(
+  supplement: "Corollary",
+  box-color: environment-colors.corollary,
+)
+#let conjecture = statement.with(
+  supplement: "Conjecture",
+  box-color: environment-colors.conjecture,
+)
+#let claim = statement.with(
+  supplement: "Claim",
+  box-color: environment-colors.claim,
+)
 #let description = statement.with(body-fmt: x => x)
-#let definition = description.with(supplement: "Definition")
-#let assumption = description.with(supplement: "Assumption")
-#let remark = description.with(supplement: "Remark")
-#let example = description.with(supplement: "Example")
-#let notation = description.with(supplement: "Notation")
-#let problem = description.with(supplement: "Problem")
-#let observation = description.with(supplement: "Observation")
-#let proof = package-proof.with(above: .5em, below: .8em)
+#let definition = description.with(
+  supplement: "Definition",
+  box-color: environment-colors.definition,
+)
+#let assumption = description.with(
+  supplement: "Assumption",
+  box-color: environment-colors.assumption,
+)
+#let remark = description.with(
+  supplement: "Remark",
+  box-color: environment-colors.remark,
+)
+#let example = description.with(
+  supplement: "Example",
+  box-color: environment-colors.example,
+)
+#let notation = description.with(
+  supplement: "Notation",
+  box-color: environment-colors.notation,
+)
+#let problem = description.with(
+  supplement: "Problem",
+  box-color: environment-colors.problem,
+)
+#let observation = description.with(
+  supplement: "Observation",
+  box-color: environment-colors.observation,
+)
+#let proof = package-proof.with(
+  fmt: boxed-thm.with(format: thm-fmt-block.with(
+    body-fmt: proof-body-fmt,
+    title-fmt: emph,
+    name-fmt: emph,
+    separator: [. ],
+  )),
+  box-color: environment-colors.proof,
+  above: .5em,
+  below: .8em,
+)
 #let algorithm = algorithmic.algorithm-figure.with(inset: .15em, indent: 1em)
 
 // Appendices start on a fresh page; their numbering is independent of the body.

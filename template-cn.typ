@@ -17,33 +17,72 @@
   first-line-indent: (amount: 2em, all: true),
 )
 #let statement = base.statement.with(
-  fmt: thm-fmt-block.with(
+  fmt: base.boxed-thm.with(format: thm-fmt-block.with(
     body-fmt: x => x,
     name-fmt: x => [（#x）],
     separator: [。 ],
-  ),
+  )),
 )
-#let theorem = statement.with(supplement: "定理")
-#let lemma = statement.with(supplement: "引理")
-#let proposition = statement.with(supplement: "命题")
-#let corollary = statement.with(supplement: "推论")
-#let conjecture = statement.with(supplement: "猜想")
-#let claim = statement.with(supplement: "断言")
-#let definition = statement.with(supplement: "定义")
-#let assumption = statement.with(supplement: "假设")
-#let remark = statement.with(supplement: "注")
-#let example = statement.with(supplement: "例")
-#let notation = statement.with(supplement: "记号")
-#let problem = statement.with(supplement: "问题")
-#let observation = statement.with(supplement: "观察")
+#let theorem = statement.with(
+  supplement: "定理",
+  box-color: base.environment-colors.theorem,
+)
+#let lemma = statement.with(
+  supplement: "引理",
+  box-color: base.environment-colors.lemma,
+)
+#let proposition = statement.with(
+  supplement: "命题",
+  box-color: base.environment-colors.proposition,
+)
+#let corollary = statement.with(
+  supplement: "推论",
+  box-color: base.environment-colors.corollary,
+)
+#let conjecture = statement.with(
+  supplement: "猜想",
+  box-color: base.environment-colors.conjecture,
+)
+#let claim = statement.with(
+  supplement: "断言",
+  box-color: base.environment-colors.claim,
+)
+#let definition = statement.with(
+  supplement: "定义",
+  box-color: base.environment-colors.definition,
+)
+#let assumption = statement.with(
+  supplement: "假设",
+  box-color: base.environment-colors.assumption,
+)
+#let remark = statement.with(
+  supplement: "注",
+  box-color: base.environment-colors.remark,
+)
+#let example = statement.with(
+  supplement: "例",
+  box-color: base.environment-colors.example,
+)
+#let notation = statement.with(
+  supplement: "记号",
+  box-color: base.environment-colors.notation,
+)
+#let problem = statement.with(
+  supplement: "问题",
+  box-color: base.environment-colors.problem,
+)
+#let observation = statement.with(
+  supplement: "观察",
+  box-color: base.environment-colors.observation,
+)
 #let proof = base.proof.with(
   supplement: "证明",
-  fmt: thm-fmt-block.with(
+  fmt: base.boxed-thm.with(format: thm-fmt-block.with(
     title-fmt: strong,
     body-fmt: proof-body-fmt,
     name-fmt: x => [（#x）],
     separator: [。 ],
-  ),
+  )),
 )
 #let algorithm = base.algorithm.with(supplement: "算法")
 #let highlight = base.highlight.with(title: "核心思想", font: (
