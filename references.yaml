@@ -1,0 +1,16 @@
+lamport1994latex:
+  type: Book
+  title: "LaTeX: A Document Preparation System"
+  author:
+    - "Lamport, Leslie"
+  edition: 2
+  publisher: Addison-Wesley
+  date: 1994
+
+knuth1984texbook:
+  type: Book
+  title: The TeXbook
+  author:
+    - "Knuth, Donald E."
+  publisher: Addison-Wesley
+  date: 1984
