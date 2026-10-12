@@ -1,14 +1,22 @@
-#import "template.typ": jlu-paper, jlu-blue, highlight, theorem, proof, appendix, lemma, proposition, corollary, definition, assumption, conjecture, remark, example, notation, claim, problem, observation, algorithm, algorithmic, subpar
+#import "template.typ": (
+  algorithm, algorithmic, appendix, assumption, claim, conjecture, corollary,
+  definition, example, highlight, jlu-blue, jlu-paper, lemma, notation,
+  observation, problem, proof, proposition, remark, subpar, theorem,
+)
 
 #show: jlu-paper.with(
   title: [Your Paper Title:\ A Clear and Concise Subtitle],
+  columns: 2,
   authors: (
     (name: "First Author", marks: "1"),
     (name: "Second Author", marks: "1"),
     (name: "Third Author", marks: "1§"),
   ),
   affiliations: (
-    (id: "1", name: "School of Your Discipline, Jilin University, Changchun, China"),
+    (
+      id: "1",
+      name: "School of Your Discipline, Jilin University, Changchun, China",
+    ),
   ),
   contributions: ([#super[§]Corresponding author],),
   abstract: [
@@ -18,7 +26,10 @@
     with a self-contained abstract of approximately 150–250 words.
   ],
   metadata: (
-    ("Correspondence", link("mailto:author@example.com")[#raw("author@example.com")]),
+    (
+      "Correspondence",
+      link("mailto:author@example.com")[#raw("author@example.com")],
+    ),
     ("Code", link("https://example.com/project")),
     // ("Date", [October 2026]),
     // ("Keywords", [Research; methodology; evaluation]),
@@ -59,12 +70,20 @@ for the objective and @fig:pipeline for an overview.
 #figure(
   align(center, grid(
     columns: (1fr, auto, 1fr, auto, 1fr), align: horizon, gutter: 1mm,
-    ..("Input", "Method", "Output").enumerate().map(((i, name)) => {
-      let stage = block(width: 100%, inset: (x: 1mm, y: 3mm), radius: 1.5mm,
-        stroke: .5pt + jlu-blue, fill: jlu-blue.lighten(95%),
-        align(center, text(size: 9pt, name)))
-      if i < 2 { (stage, text(fill: jlu-blue)[→]) } else { (stage,) }
-    }).flatten(),
+    ..("Input", "Method", "Output")
+      .enumerate()
+      .map(((i, name)) => {
+        let stage = block(
+          width: 100%,
+          inset: (x: 1mm, y: 3mm),
+          radius: 1.5mm,
+          stroke: .5pt + jlu-blue,
+          fill: jlu-blue.lighten(95%),
+          align(center, text(size: 9pt, name)),
+        )
+        if i < 2 { (stage, text(fill: jlu-blue)[→]) } else { (stage,) }
+      })
+      .flatten(),
   )),
   caption: [An example pipeline. Replace it with an overview of your method.],
 ) <fig:pipeline>
@@ -90,8 +109,12 @@ Their mathematical content is only an example.
 #corollary[If all sample losses belong to $[0, M]$, their average belongs to $[0, M]$.]
 #conjecture[The proposed approach generalizes to unseen data under suitable conditions.]
 #notation[We use $N$ for the number of samples and $theta$ for model parameters.]
-#example(name: "Two samples")[Losses of $1$ and $3$ yield an empirical risk of $2$.]
-#remark(numbering: none)[An unnumbered environment does not advance the shared counter.]
+#example(
+  name: "Two samples",
+)[Losses of $1$ and $3$ yield an empirical risk of $2$.]
+#remark(
+  numbering: none,
+)[An unnumbered environment does not advance the shared counter.]
 #problem[Find model parameters that minimize the empirical risk.]
 #claim[The example losses are nonnegative.]
 #observation[The two-sample average lies between the two sample losses.]
@@ -112,12 +135,32 @@ For a zero-loss special case, see @lem:zero.
 
 == Subfigure Example
 #subpar.grid(
-  figure(rect(width: 100%, height: 18mm, fill: jlu-blue.lighten(95%),
-    stroke: .5pt + jlu-blue)[#align(center + horizon)[Input]], caption: [Input stage.]), <fig:input>,
-  figure(rect(width: 100%, height: 18mm, fill: jlu-blue.lighten(95%),
-    stroke: .5pt + jlu-blue)[#align(center + horizon)[Output]], caption: [Output stage.]), <fig:output>,
-  columns: (1fr, 1fr), gutter: 6.5mm,
-  caption: [An example with two subfigures.], label: <fig:stages>,
+  figure(
+    rect(
+      width: 100%,
+      height: 18mm,
+      fill: jlu-blue.lighten(95%),
+      stroke: .5pt + jlu-blue,
+    )[#align(center + horizon)[Input]],
+    caption: [Input stage.],
+  ),
+  <fig:input>,
+
+  figure(
+    rect(
+      width: 100%,
+      height: 18mm,
+      fill: jlu-blue.lighten(95%),
+      stroke: .5pt + jlu-blue,
+    )[#align(center + horizon)[Output]],
+    caption: [Output stage.],
+  ),
+  <fig:output>,
+
+  columns: (1fr, 1fr),
+  gutter: 6.5mm,
+  caption: [An example with two subfigures.],
+  label: <fig:stages>,
 )
 @fig:stages contains @fig:input and @fig:output.
 
@@ -132,8 +175,10 @@ placeholders, rather than measured experimental results.
 
 #figure(
   table(
-    columns: (1fr, auto, auto), align: (left, right, right),
-    stroke: none, inset: (x: 4pt, y: 5pt),
+    columns: (1fr, auto, auto),
+    align: (left, right, right),
+    stroke: none,
+    inset: (x: 4pt, y: 5pt),
     table.hline(stroke: .8pt),
     table.header([Method], [Score $arrow.t$], [Time $arrow.b$]),
     table.hline(stroke: .5pt),
@@ -142,7 +187,8 @@ placeholders, rather than measured experimental results.
     [Ours], [*79.4*], [*0.92*],
     table.hline(stroke: .8pt),
   ),
-  kind: table, supplement: [Table],
+  kind: table,
+  supplement: [Table],
   caption: [Example results (illustrative values only).],
 ) <tab:results>
 Discuss effect sizes and uncertainty, along with relevant failure cases.

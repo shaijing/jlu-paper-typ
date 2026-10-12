@@ -8,11 +8,11 @@
 
 已使用 Typst 0.15.1 验证。首次编译需要联网下载以下固定版本的 Typst Universe 包，下载后会使用本地缓存：
 
-| 包 | 用途 |
-| --- | --- |
-| [ctheorems 2.0.0](https://typst.app/universe/package/ctheorems/) | 定理类环境、共享编号、引用与证明结束符 |
-| [algorithmic 1.0.7](https://typst.app/universe/package/algorithmic/) | 算法、行号与控制流 |
-| [subpar 0.2.2](https://typst.app/universe/package/subpar/) | 子图、子图注与引用 |
+| 包                                                                   | 用途                                   |
+| -------------------------------------------------------------------- | -------------------------------------- |
+| [ctheorems 2.0.0](https://typst.app/universe/package/ctheorems/)     | 定理类环境、共享编号、引用与证明结束符 |
+| [algorithmic 1.0.7](https://typst.app/universe/package/algorithmic/) | 算法、行号与控制流                     |
+| [subpar 0.2.2](https://typst.app/universe/package/subpar/)           | 子图、子图注与引用                     |
 
 在项目根目录执行：
 
@@ -28,13 +28,13 @@ typst watch main.typ main.pdf
 
 ## 文件
 
-| 文件 | 用途 |
-| --- | --- |
-| `main.typ` | 英文入口，填写论文信息并替换正文示例 |
-| `template.typ` | 可复用的排版函数、主题色和辅助函数 |
-| `references.yaml` | Hayagriva YAML 文献库 |
-| `figures/jlu.svg` | 从参考项目 PDF 转换的矢量校徽 |
-| `justfile` | 编译、监听、清理命令 |
+| 文件              | 用途                                 |
+| ----------------- | ------------------------------------ |
+| `main.typ`        | 英文入口，填写论文信息并替换正文示例 |
+| `template.typ`    | 可复用的排版函数、主题色和辅助函数   |
+| `references.yaml` | Hayagriva YAML 文献库                |
+| `figures/jlu.svg` | 从参考项目 PDF 转换的矢量校徽        |
+| `justfile`        | 编译、监听、清理命令                 |
 
 ## 修改论文信息
 
@@ -80,21 +80,21 @@ lamport1994latex:
 
 定理类环境由 `ctheorems` 提供，模板只配置名称、字体样式、间距及计数器。以下环境按一级标题重新编号，共享同一个计数器，附录使用 `A.1` 等编号：
 
-| 函数 | 显示名称 | 正文样式 |
-| --- | --- | --- |
-| `theorem` | Theorem | 斜体 |
-| `lemma` | Lemma | 斜体 |
-| `proposition` | Proposition | 斜体 |
-| `corollary` | Corollary | 斜体 |
-| `conjecture` | Conjecture | 斜体 |
-| `claim` | Claim | 斜体 |
-| `definition` | Definition | 正体 |
-| `assumption` | Assumption | 正体 |
-| `remark` | Remark | 正体 |
-| `example` | Example | 正体 |
-| `notation` | Notation | 正体 |
-| `problem` | Problem | 正体 |
-| `observation` | Observation | 正体 |
+| 函数          | 显示名称    | 正文样式 |
+| ------------- | ----------- | -------- |
+| `theorem`     | Theorem     | 斜体     |
+| `lemma`       | Lemma       | 斜体     |
+| `proposition` | Proposition | 斜体     |
+| `corollary`   | Corollary   | 斜体     |
+| `conjecture`  | Conjecture  | 斜体     |
+| `claim`       | Claim       | 斜体     |
+| `definition`  | Definition  | 正体     |
+| `assumption`  | Assumption  | 正体     |
+| `remark`      | Remark      | 正体     |
+| `example`     | Example     | 正体     |
+| `notation`    | Notation    | 正体     |
+| `problem`     | Problem     | 正体     |
+| `observation` | Observation | 正体     |
 
 从 `template.typ` 导入所需函数后使用，例如：
 

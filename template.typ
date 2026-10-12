@@ -4,9 +4,13 @@
 #let column-layout = columns
 
 #let highlight(title: "Key idea", breakable: false, body) = block(
-  width: 100%, breakable: breakable, radius: 1.5mm,
-  above: .8em, below: .8em,
-  fill: jlu-blue.lighten(96%), stroke: .5pt + jlu-blue,
+  width: 100%,
+  breakable: breakable,
+  radius: 1.5mm,
+  above: .8em,
+  below: .8em,
+  fill: jlu-blue.lighten(96%),
+  stroke: .5pt + jlu-blue,
   inset: 2mm,
 )[
   #text(font: front-font, weight: "bold", fill: jlu-blue)[#title]
@@ -15,14 +19,22 @@
 ]
 
 // Package-backed environments: only theme and shared-counter configuration live here.
-#import "@preview/ctheorems:2.0.0": thm, thm-rules, proof as package-proof, qedhere, tag
+#import "@preview/ctheorems:2.0.0": (
+  proof as package-proof, qedhere, tag, thm, thm-rules,
+)
 #import "@preview/algorithmic:1.0.7" as algorithmic
 #import "@preview/subpar:0.2.2" as subpar
 #let appendix-mode = state("jlu-appendix-mode", false)
 #let statement = thm.with(
-  counter: "jlu-statements", base: "heading", base-level: 1,
-  numbering: (..n) => numbering(if appendix-mode.get() { "A.1" } else { "1.1" }, ..n.pos()),
-  above: .8em, below: .5em,
+  counter: "jlu-statements",
+  base: "heading",
+  base-level: 1,
+  numbering: (..n) => numbering(
+    if appendix-mode.get() { "A.1" } else { "1.1" },
+    ..n.pos(),
+  ),
+  above: .8em,
+  below: .5em,
 )
 #let theorem = statement.with(supplement: "Theorem")
 #let lemma = statement.with(supplement: "Lemma")
@@ -52,21 +64,40 @@
 }
 
 #let jlu-paper(
-  title: [], authors: (), affiliations: (), contributions: (),
-  abstract: [], metadata: (), logo: "figures/jlu.svg",
-  columns: 2, body-font: "New Computer Modern", body-size: 10pt,
-  body-leading: .5em, paragraph-spacing: .7em,
-  metadata-leading: .45em, metadata-spacing: .55em,
+  title: [],
+  authors: (),
+  affiliations: (),
+  contributions: (),
+  abstract: [],
+  metadata: (),
+  logo: "figures/jlu.svg",
+  columns: 2,
+  body-font: "New Computer Modern",
+  body-size: 10pt,
+  body-leading: .5em,
+  paragraph-spacing: .7em,
+  metadata-leading: .45em,
+  metadata-spacing: .55em,
   body,
 ) = {
   set document(title: title, author: authors.map(a => a.name))
   set page(
-    paper: "a4", margin: (top: 2.75cm, bottom: 2.5cm, x: 2.5cm),
-    columns: columns, numbering: "1", number-align: center,
+    paper: "a4",
+    margin: (top: 2.75cm, bottom: 2.5cm, x: 2.5cm),
+    columns: columns,
+    numbering: "1",
+    number-align: center,
     header: context {
       if counter(page).get().first() == 1 {
-        grid(columns: (1fr, auto), align: (left + horizon, right + horizon),
-          text(font: front-font, weight: "regular", size: 9pt, fill: jlu-blue)[JILIN UNIVERSITY],
+        grid(
+          columns: (1fr, auto),
+          align: (left + horizon, right + horizon),
+          text(
+            font: front-font,
+            weight: "regular",
+            size: 9pt,
+            fill: jlu-blue,
+          )[JILIN UNIVERSITY],
           if logo != none { image(logo, height: 13.5mm) },
         )
       }
@@ -80,12 +111,20 @@
   set column-layout(gutter: 6.5mm)
   set heading(numbering: "1.1")
   show heading: it => {
-    block(sticky: true,
+    block(
+      sticky: true,
       above: if it.level == 1 { 1.2em } else { .9em },
       below: if it.level == 1 { .6em } else { .45em },
     )[
-      #text(font: front-font, weight: "bold", fill: jlu-blue,
-        size: if it.level == 1 { 12pt } else if it.level == 2 { 11pt } else { 10pt }, it)
+      #text(
+        font: front-font,
+        weight: "bold",
+        fill: jlu-blue,
+        size: if it.level == 1 { 12pt } else if it.level == 2 { 11pt } else {
+          10pt
+        },
+        it,
+      )
     ]
   }
   show link: set text(fill: jlu-blue)
@@ -112,7 +151,12 @@
     #align(center)[
       #line(length: 100%, stroke: .5pt + jlu-blue)
       #v(6mm)
-      #text(font: front-font, weight: "bold", size: 17pt, hyphenate: false)[#title]
+      #text(
+        font: front-font,
+        weight: "bold",
+        size: 17pt,
+        hyphenate: false,
+      )[#title]
       #v(6mm)
       #line(length: 100%, stroke: .5pt + jlu-blue)
       #v(6mm)
@@ -129,15 +173,29 @@
       }
     ]
     #v(6mm)
-    #block(width: 100%, inset: (x: 8mm, y: 6mm), radius: 2.5mm, stroke: .5pt + jlu-blue)[
-      #align(center, text(font: front-font, size: 12pt, weight: "bold", fill: jlu-blue)[Abstract])
+    #block(
+      width: 100%,
+      inset: (x: 8mm, y: 6mm),
+      radius: 2.5mm,
+      stroke: .5pt + jlu-blue,
+    )[
+      #align(center, text(
+        font: front-font,
+        size: 12pt,
+        weight: "bold",
+        fill: jlu-blue,
+      )[Abstract])
       #v(3mm)
       #set par(justify: true, leading: .5em, spacing: .6em)
       #text(size: 10pt)[#abstract]
       #if metadata.len() > 0 {
         v(3mm)
         set text(size: 7.92pt)
-        set par(justify: false, leading: metadata-leading, spacing: metadata-spacing)
+        set par(
+          justify: false,
+          leading: metadata-leading,
+          spacing: metadata-spacing,
+        )
         for (key, value) in metadata {
           [#text(font: front-font, weight: "bold")[#key:] #value #parbreak()]
         }
@@ -147,7 +205,11 @@
   show: thm-rules.with(qed-symbol: $square$)
   show: algorithmic.style-algorithm.with(
     breakable: false,
-    hlines: (grid.hline(stroke: .5pt + jlu-blue), grid.hline(stroke: .5pt + jlu-blue), grid.hline(stroke: .5pt + jlu-blue)),
+    hlines: (
+      grid.hline(stroke: .5pt + jlu-blue),
+      grid.hline(stroke: .5pt + jlu-blue),
+      grid.hline(stroke: .5pt + jlu-blue),
+    ),
   )
   body
 }
