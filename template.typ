@@ -3,7 +3,12 @@
 #let front-font = "Libertinus Serif"
 #let column-layout = columns
 
-#let highlight(title: "Key idea", breakable: false, body) = block(
+#let highlight(
+  title: "Key idea",
+  breakable: false,
+  font: front-font,
+  body,
+) = block(
   width: 100%,
   breakable: breakable,
   radius: 1.5mm,
@@ -13,7 +18,8 @@
   stroke: .5pt + jlu-blue,
   inset: 2mm,
 )[
-  #text(font: front-font, weight: "bold", fill: jlu-blue)[#title]
+  #set par(first-line-indent: 0pt)
+  #text(font: font, weight: "bold", fill: jlu-blue)[#title]
   #v(1.5mm)
   #body
 ]
@@ -72,10 +78,15 @@
   metadata: (),
   logo: "figures/jlu.svg",
   columns: 2,
+  lang: "en",
+  front-font: front-font,
+  university-name: [JILIN UNIVERSITY],
+  abstract-title: [Abstract],
   body-font: "New Computer Modern",
   body-size: 10pt,
   body-leading: .5em,
   paragraph-spacing: .7em,
+  first-line-indent: 0pt,
   metadata-leading: .45em,
   metadata-spacing: .55em,
   body,
@@ -97,17 +108,27 @@
             weight: "regular",
             size: 9pt,
             fill: jlu-blue,
-          )[JILIN UNIVERSITY],
+          )[#university-name],
           if logo != none { image(logo, height: 13.5mm) },
         )
       }
     },
     header-ascent: 5mm,
   )
-  set text(font: body-font, size: body-size, lang: "en", hyphenate: true)
+  set text(
+    font: body-font,
+    size: body-size,
+    lang: lang,
+    hyphenate: lang == "en",
+  )
   show math.equation: set text(font: "New Computer Modern Math")
   show raw: set text(font: "DejaVu Sans Mono")
-  set par(justify: true, leading: body-leading, spacing: paragraph-spacing)
+  set par(
+    justify: true,
+    leading: body-leading,
+    spacing: paragraph-spacing,
+    first-line-indent: first-line-indent,
+  )
   set column-layout(gutter: 6.5mm)
   set heading(numbering: "1.1")
   show heading: it => {
@@ -130,8 +151,10 @@
   show link: set text(fill: jlu-blue)
   show ref: set text(fill: jlu-blue)
   set math.equation(numbering: "(1)")
+  set math.equation(supplement: if lang == "zh" { [式] } else { [Equation] })
   show math.equation.where(block: true): set block(above: .8em, below: .8em)
   set figure(gap: .65em)
+  show figure: set par(first-line-indent: 0pt)
   show figure: set block(above: .9em, below: .9em)
   show figure.caption: it => {
     set text(size: 9pt)
@@ -143,11 +166,16 @@
     set par(leading: .45em, spacing: .6em)
     it
   }
-  set list(indent: 0pt, body-indent: 1em, spacing: .3em)
+  set list(indent: 0pt, body-indent: 1em, spacing: .3em, tight: lang != "zh")
 
   // A parent-scoped block spans both columns before the body begins.
   place(top, scope: "parent", float: true, clearance: 8mm, block(width: 100%)[
-    #set par(justify: false, leading: .4em, spacing: 0pt)
+    #set par(
+      justify: false,
+      leading: .4em,
+      spacing: 0pt,
+      first-line-indent: 0pt,
+    )
     #align(center)[
       #line(length: 100%, stroke: .5pt + jlu-blue)
       #v(6mm)
@@ -184,7 +212,7 @@
         size: 12pt,
         weight: "bold",
         fill: jlu-blue,
-      )[Abstract])
+      )[#abstract-title])
       #v(3mm)
       #set par(justify: true, leading: .5em, spacing: .6em)
       #text(size: 10pt)[#abstract]
@@ -197,7 +225,9 @@
           spacing: metadata-spacing,
         )
         for (key, value) in metadata {
-          [#text(font: front-font, weight: "bold")[#key:] #value #parbreak()]
+          [#text(font: front-font, weight: "bold")[#key#if (
+                lang == "zh"
+              ) [：] else [:]] #value #parbreak()]
         }
       }
     ]

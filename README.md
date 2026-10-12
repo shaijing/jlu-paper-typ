@@ -1,8 +1,8 @@
-# 吉林大学 Typst 科研论文模板（英文版）
+# 吉林大学 Typst 科研论文模板（中英文）
 
 参考相邻 `jlu-template` 的英文 LaTeX 设计实现：A4 双栏、吉林大学蓝色主题（`#1D5CAB`）、首页校名与校徽、标题横线、作者单位及通讯作者、圆角摘要框。正文提供公式与交叉引用、流程图、三线表、提示框、按章节编号的定理与证明、数字参考文献，以及另起一页的单栏附录。
 
-这是科研论文样式，尚未实现中文入口。正文内容和表格数值均为占位示例。
+这是科研论文样式，提供独立的中英文入口。正文内容和表格数值均为占位示例。
 
 ## 编译
 
@@ -18,13 +18,30 @@
 
 ```sh
 typst compile main.typ main.pdf
+# 中文版
+typst compile main-cn.typ main-cn.pdf
 # 修改后自动重新编译
 typst watch main.typ main.pdf
 ```
 
-安装 `just` 后，也可使用 `just`（编译）、`just watch`（监听）和 `just clean`（清理生成的 PDF）。生成的 `main.pdf` 可以直接预览。
+安装 `just` 后，也可使用 `just`（编译）、`just watch`（监听）和 `just clean`（清理生成的 PDF）。中文版使用 `just cn` 编译、`just watch-cn` 监听，`just both` 编译两个版本。生成的 `main.pdf` 和 `main-cn.pdf` 可以直接预览。
 
 使用 Typst 自带字体，无需安装系统字体或指定字体路径，Linux、Windows 和 macOS 均可编译。标题和作者信息使用 Libertinus Serif，正文使用 New Computer Modern，公式使用 New Computer Modern Math，等宽文本使用 DejaVu Sans Mono。
+
+## 中文版
+
+编辑 `main-cn.typ` 的标题、作者、单位、摘要、关键词和正文。中文版复用 `template.typ` 的页面与主题配置，`template-cn.typ` 只负责本地化；数学环境仍使用 ctheorems，算法使用 algorithmic，子图使用 subpar。
+
+中文正文使用 **Noto Serif CJK SC**，标题使用 **Noto Sans CJK SC**。中文字体不是 Typst 自带字体，需要在编译环境中安装；Noto CJK 可用于 Linux、Windows 和 macOS，项目不附带字体文件。使用 `typst fonts` 检查字体是否可用。英文和数学部分保留 Typst 自带字体。
+
+中文版正文每段首行缩进两个字宽，摘要、图表和数学环境不缩进；标题、图表、公式、算法和定理引用显示中文，定理正文使用正体。算法控制流仍采用包默认的英文关键字。参考文献共用 `references.yaml`，样式为 IEEE，并非 GB/T 7714。
+
+中文字体可在 `template-cn.typ` 中替换，或在 `main-cn.typ` 的 `jlu-paper.with(...)` 中设置：
+
+```typ
+  body-font: ("New Computer Modern", "Your Chinese Serif Font"),
+  front-font: ("Libertinus Serif", "Your Chinese Sans Font"),
+```
 
 ## 文件
 
